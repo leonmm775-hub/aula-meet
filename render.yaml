@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: aula-meet
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MAX_PER_ROOM
+        value: "12"

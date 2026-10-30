@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aula Meet</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <!-- Pantalla de entrada -->
+  <main id="lobby" class="lobby">
+    <div class="lobby-card">
+      <h1>Aula Meet</h1>
+      <p class="sub">Videollamadas y chat para la clase</p>
+      <div class="preview">
+        <video id="previewVideo" autoplay playsinline muted></video>
+        <div id="previewOff" class="preview-off hidden">Cámara desactivada</div>
+      </div>
+      <form id="joinForm">
+        <div id="roomInfo" class="room-info hidden">Vas a entrar a la clase <b id="roomInfoName"></b></div>
+        <label>Tu nombre
+          <input id="nameInput" maxlength="30" placeholder="Ej. Ana López" required autocomplete="name">
+        </label>
+        <label id="roomField">Código de la clase <small>(déjalo vacío para crear una nueva)</small>
+          <input id="roomInput" maxlength="40" placeholder="ej. matematicas-3b">
+        </label>
+        <button type="submit" class="btn-primary" id="joinBtn">Crear clase nueva</button>
+        <p id="lobbyError" class="error"></p>
+      </form>
+    </div>
+  </main>
+
+  <!-- Sala -->
+  <section id="room" class="room hidden">
+    <header class="topbar">
+      <span id="roomName" class="room-name"></span>
+      <span id="peopleCount" class="people"></span>
+      <button id="copyLinkBtn" class="btn-secondary small">Copiar enlace</button>
+    </header>
+
+    <div class="stage">
+      <div id="grid" class="grid"></div>
+      <aside id="chatPanel" class="chat hidden">
+        <div class="chat-head">
+          <strong>Chat de la clase</strong>
+          <button id="closeChatBtn" class="icon-btn" aria-label="Cerrar chat">✕</button>
+        </div>
+        <ul id="messages" class="messages"></ul>
+        <form id="chatForm" class="chat-form">
+          <input id="chatInput" maxlength="1000" placeholder="Escribe un mensaje…" autocomplete="off">
+          <button class="btn-primary small">Enviar</button>
+        </form>
+      </aside>
+    </div>
+
+    <footer class="controls">
+      <button id="micBtn" class="ctrl" title="Micrófono">🎤<span>Micro</span></button>
+      <button id="camBtn" class="ctrl" title="Cámara">📷<span>Cámara</span></button>
+      <button id="screenBtn" class="ctrl" title="Compartir pantalla">🖥️<span>Pantalla</span></button>
+      <button id="chatBtn" class="ctrl" title="Chat">💬<span>Chat</span><i id="unread" class="badge hidden"></i></button>
+      <button id="leaveBtn" class="ctrl leave" title="Salir">📞<span>Salir</span></button>
+    </footer>
+  </section>
+
+  <!-- Invitación: se muestra al crear la clase -->
+  <div id="invite" class="invite hidden" role="dialog" aria-labelledby="inviteTitle">
+    <div class="invite-card">
+      <h2 id="inviteTitle">Tu clase está lista</h2>
+      <p>Envía este enlace a tus estudiantes (por WhatsApp, correo, Classroom…). Solo tienen que abrirlo y escribir su nombre.</p>
+      <div class="invite-link">
+        <input id="inviteLink" readonly>
+        <button id="inviteCopyBtn" class="btn-primary">Copiar</button>
+      </div>
+      <p class="tip">💡 El enlace sirve siempre: guárdalo y usa el mismo para todas tus clases.</p>
+      <button id="inviteCloseBtn" class="btn-secondary">Entendido</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
